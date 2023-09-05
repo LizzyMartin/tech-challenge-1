@@ -1,39 +1,33 @@
 package com.alura.tech.service;
 
 import com.alura.tech.entities.Pessoa;
-import com.alura.tech.exceptions.InvalidPersonException;
+import com.alura.tech.entities.enums.TipoParentesco;
+import com.alura.tech.exceptions.AssociationException;
 import com.alura.tech.model.PessoaDTO;
-import com.alura.tech.repository.PessoaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.alura.tech.model.response.PessoaCompletoDTO;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.NoSuchElementException;
 
-@Service
-public class PessoaService {
+public interface PessoaService {
 
-    @Autowired
-    private PessoaRepository repository;
+    List<PessoaCompletoDTO> listaPessoas();
 
-    public List<Pessoa> listaPessoas() {
-        return this.repository.listaPessoas();
-    }
+    List<PessoaCompletoDTO> buscaPessoas(PessoaDTO pessoaDTO);
 
-    public Pessoa listaPessoa(UUID id) {
-        return this.repository.listaPessoa(id);
-    }
+    Pessoa listaPessoa(Long id) throws IllegalArgumentException, NoSuchElementException;
 
-    public void cadastraPessoa(PessoaDTO pessoaDTO) {
-        this.repository.adicionaPessoa(pessoaDTO);
-    }
+    PessoaCompletoDTO listPessoaCompleto(Long id);
 
-    public void atualizaPessoa(PessoaDTO pessoaDTO, UUID id) throws InvalidPersonException {
-        this.repository.atualizaPessoa(pessoaDTO, id);
-    }
+    void cadastraPessoa(PessoaDTO pessoaDTO);
 
-    public void deletaPessoa(UUID id) throws InvalidPersonException {
-        this.repository.deletaPessoa(id);
-    }
+    void atualizaPessoa(PessoaDTO pessoaDTO, Long id) throws NoSuchElementException;
 
+    void deletaPessoa(Long id) throws IllegalArgumentException;
+
+    void associaPessoaEndereco(Long pessoaId, Long enderecoId) throws AssociationException;
+
+    void associaPessoaEletrodomestico(Long pessoaId, Long eletrodomesticoId) throws AssociationException;
+
+    void associaPessoaParente(Long pessoaId, Long parenteId, TipoParentesco tipoParentesco) throws AssociationException;
 }

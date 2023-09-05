@@ -12,5 +12,6 @@ public interface EnderecoMapper {
     EnderecoMapper INSTANCE = Mappers.getMapper(EnderecoMapper.class);
 
     EnderecoDTO enderecoToEnderecoDTO(Endereco endereco);
+
     Endereco enderecoDTOToEndereco(EnderecoDTO enderecoDTO);
 }

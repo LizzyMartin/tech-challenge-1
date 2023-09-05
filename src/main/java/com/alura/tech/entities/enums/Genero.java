@@ -1,4 +1,4 @@
-package com.alura.tech.entities;
+package com.alura.tech.entities.enums;
 
 public enum Genero {
     MASCULINO,

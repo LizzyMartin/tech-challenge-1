@@ -1,6 +1,6 @@
 package com.alura.tech.model;
 
-import com.alura.tech.entities.Genero;
+import com.alura.tech.entities.enums.Genero;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.PastOrPresent;
 import lombok.AllArgsConstructor;
@@ -21,8 +21,5 @@ public class PessoaDTO {
     private LocalDate dataNascimento;
 
     private Genero sexo;
-
-    @NotBlank
-    private String parentesco;
 
 }

@@ -1,39 +1,21 @@
 package com.alura.tech.service;
 
 import com.alura.tech.entities.Endereco;
-import com.alura.tech.exceptions.InvalidAddressException;
 import com.alura.tech.model.EnderecoDTO;
-import com.alura.tech.repository.EnderecoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
-@Service
-public class EnderecoService {
+public interface EnderecoService {
 
-    @Autowired
-    private EnderecoRepository repository;
+    List<Endereco> listaEnderecos();
 
-    public List<Endereco> listaEnderecos() {
-        return this.repository.listaEnderecos();
-    }
+    Endereco listaEndereco(Long id);
 
-    public Endereco listaEndereco(UUID id) {
-        return this.repository.listaEndereco(id);
-    }
+    List<Endereco> buscaEnderecos(EnderecoDTO enderecoDTO);
 
-    public void adicionaEndereco(EnderecoDTO endereco) {
-        this.repository.adicionaEndereco(endereco);
-    }
+    void adicionaEndereco(EnderecoDTO endereco);
 
-    public void atualizaEndereco(EnderecoDTO enderecoDTO, UUID id) throws InvalidAddressException {
-        this.repository.atualizaEndereco(enderecoDTO, id);
-    }
+    void atualizaEndereco(EnderecoDTO enderecoDTO, Long id);
 
-    public void deletaEndereco(UUID id) throws InvalidAddressException {
-        this.repository.deletaEndereco(id);
-    }
-
+    void deletaEndereco(Long id);
 }

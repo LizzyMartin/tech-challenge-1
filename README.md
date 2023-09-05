@@ -1,6 +1,6 @@
-# alura-fiap tech-challenge 1
+# alura-fiap tech-challenge 2
 
-Esse é o repositório contendo o código e documentação do tech-challenge 1 da pós tech de Arquitetura e Desenvolvimento Java. As principais dificuldades encontradas foram referentes ao ambiente, visto que pela primeira vez codei algo no Windows ao invés do Linux.
+Esse é o repositório contendo o código e documentação do tech-challenge 2 da pós tech de Arquitetura e Desenvolvimento Java. As principais dificuldades encontradas foram referentes ao uso do banco de dados, foram encontrados problemas para fazer as relações ManyToMany, OneToMany etc. A busca também foi um desafio, sendo que foi implementada de forma simples.
 
 ## Tecnologias utilizadas
 - Spring Boot 3
@@ -9,6 +9,8 @@ Esse é o repositório contendo o código e documentação do tech-challenge 1 d
 - MapStruct
 - Spring Validation
 - Lombok
+- h2
+- Spring Data JPA
 
 ## Rotas
 
@@ -101,6 +103,31 @@ response:
 Endereço excluido com sucesso!
 ```
 
+---
+
+POST `/api/address/search` : recebe um parametro do endereco e busca por ele. Exemplo:
+
+request body:
+```json
+{
+    "estado": "Estado Lindo"
+}
+```
+
+response:
+```json
+[
+  {
+    "id": 1,
+    "rua": "Rua das Pitangueiras",
+    "numero": "123",
+    "bairro": "Bairro do Limão",
+    "cidade": "Cidade Bonita",
+    "estado": "Estado Lindo"
+  }
+]
+```
+
 ### Pessoas
 
 GET `/api/people/{id}` : recebe um id como parâmetro no path e retorna a pessoa do id solicitado caso encontre. Exemplo:
@@ -185,6 +212,53 @@ response:
 Pessoa excluida com sucesso!
 ```
 
+---
+
+POST `/api/people/search` : recebe um parametro da pessoa e busca por ele. Exemplo:
+
+request body:
+```json
+{
+  "nome": "paulo"
+}
+```
+
+response:
+```json
+[
+  {
+    "nome": "paulo",
+    "dataNascimento": "2023-09-02",
+    "sexo": "MASCULINO",
+    "parentesco": [],
+    "enderecos": [],
+    "eletrodomesticos": []
+  }
+]
+```
+
+---
+
+POST `/api/people/{pessoaId}/endereco/{enderecoId}` : associa uma pessoa a um endereco. Se não existir algum id a associação não é feita. Exemplo:
+
+request:
+> http://localhost:8080/api/people/1/endereco/1
+
+---
+
+POST `/api/people/{pessoaId}/eletrodomestico/{eletrodomesticoId}` : associa uma pessoa a um eletrodomestico. Se não existir algum id a associação não é feita. Exemplo:
+
+request:
+> http://localhost:8080/api/people/1/eletrodomestico/1
+
+---
+
+POST `/api/people/{pessoaId}/relative/{parenteId}` : associa uma pessoa a um parente. Se não existir algum id a associação não é feita. Exemplo:
+
+request:
+> http://localhost:8080/api/people/1/relative/2?tipoParentesco=PAI
+
+
 ### Eletrodomesticos
 
 GET `/api/homeappliance/{id}` : recebe um id como parâmetro no path e retorna o eletrodomestico do id solicitado caso encontre. Exemplo:
@@ -264,4 +338,28 @@ request:
 response:
 ```txt
 Eletrodomestico excluido com sucesso!
+```
+
+---
+
+POST `/api/homeappliance/search` : recebe um parametro do eletrodomestico e busca por ele. Exemplo:
+
+request body:
+```json
+{
+  "nome": "aspirador"
+}
+```
+
+response:
+```json
+[
+  {
+    "id": 1,
+    "nome": "aspirador",
+    "modelo": "mondial",
+    "potencia": "100W",
+    "consumo": 41191
+  }
+]
 ```
